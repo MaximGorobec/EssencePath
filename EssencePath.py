@@ -29,6 +29,11 @@ async def main():
         EssenceStorage.render()
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
             if event.type == pygame.MOUSEMOTION:
                 mouse_pos = event.pos
                 for i in range(len(EssenceStorage.collision_mup)):
