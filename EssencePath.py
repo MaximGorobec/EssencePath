@@ -1,6 +1,3 @@
-import pygame
-from pygame.examples.music_drop_fade import volume
-
 from classes.BoardClass import BoardClass
 from classes.EssenceStorageClass import EssenceStorage
 from fun.render_fun import *
@@ -15,7 +12,6 @@ clock = pygame.time.Clock()
 EssenceStorage = EssenceStorage(screen)
 
 turning_pages_sound = pygame.mixer.Sound('data/sounds/book-turning-pages.mp3')
-
 
 async def main():
     running = True
@@ -46,10 +42,13 @@ async def main():
                     mouse_collide = None
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                board_click = Board.click_on_cell(event.pos)
                 essence_storage_click = EssenceStorage.click_on_cell(pos=event.pos)
                 if event.button == 1:
                     if essence_storage_click is not None:
                         mouse_memory = EssenceStorage.collision_mup[essence_storage_click[0]][essence_storage_click[1]]
+                if event.button == 2:
+                    mouse_memory = Board.essence_mup[board_click[0]][board_click[1]]
 
             if event.type == pygame.MOUSEBUTTONUP:
                 board_click = Board.click_on_cell(event.pos)
@@ -77,7 +76,6 @@ async def main():
         pygame.display.update()
         clock.tick(FPS)
         if is_connected_subgraph(Board.graf, Board.block_tiles):
-            print("!!!!")
             sleep(0.5)
             turning_pages_sound.play(1, 760)
             break
