@@ -64,10 +64,19 @@ class BoardClass:
                                          self.colision_mup[x + i[0]][y + i[1]].center, 3)
                         self.graf[(x, y)].add((x + i[0], y + i[1]))
                         t = 1
-        if t: return True
+
+
         if self.essence_mup[x][y] is not None:
             if (x, y) not in self.block_tiles:
-                self.essence_mup[x][y].img = white_black_convert(self.essence_mup[x][y].img)
+                t_colored = 0
+                for i in self.block_tiles:
+                    print(list(i) + [(x, y)])
+                    if is_connected_subgraph(self.graf, [i] + [(x, y)]):
+                        t_colored = 1
+                if not t_colored:
+                    self.essence_mup[x][y].img = white_black_convert(self.essence_mup[x][y].img)
+        if t: return True
+
         return False
 
     def remove_node(self, tile):

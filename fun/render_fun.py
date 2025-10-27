@@ -56,10 +56,8 @@ def is_connected_subgraph(graph, target_nodes):
 def white_black_convert(image):
     arr = pygame.surfarray.array3d(image)
     alpha = pygame.surfarray.array_alpha(image)
-
     gray = (0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]).astype(np.uint8)
-    bw_arr = np.stack([gray, gray, gray], axis=2)  # RGB снова в 3 канала
-
+    bw_arr = np.stack([gray, gray, gray], axis=2)
     bw_image = pygame.Surface(image.get_size(), pygame.SRCALPHA)
     pygame.surfarray.blit_array(bw_image, bw_arr)
     pygame.surfarray.pixels_alpha(bw_image)[:] = alpha

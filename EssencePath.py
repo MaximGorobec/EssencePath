@@ -1,3 +1,5 @@
+import pygame.display
+
 from classes.BoardClass import BoardClass
 from classes.EssenceStorageClass import EssenceStorage
 from fun.render_fun import *
@@ -86,7 +88,8 @@ async def main():
             sleep(0.5)
             turning_pages_sound.play(1, 760)
             break
-
+        pygame.display.flip()
+        screen.fill((0, 0, 0))
 while True:
     asyncio.run(main())
 
