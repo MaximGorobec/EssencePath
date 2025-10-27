@@ -67,7 +67,7 @@ class BoardClass:
         return False
 
     def remove_node(self, tile):
+        for i in self.graf[tile]:
+            self.graf[i].remove(tile)
         self.graf[tile] = set()
-        for i in self.graf.keys():
-            if tile in self.graf[i]:
-                self.graf[i].remove(tile)
+

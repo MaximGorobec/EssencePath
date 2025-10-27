@@ -53,7 +53,8 @@ async def main():
                     if essence_storage_click is not None:
                         mouse_memory = EssenceStorage.collision_mup[essence_storage_click[0]][essence_storage_click[1]]
                 if event.button == 2:
-                    mouse_memory = Board.essence_mup[board_click[0]][board_click[1]]
+                    if board_click is not None:
+                        mouse_memory = Board.essence_mup[board_click[0]][board_click[1]]
 
             if event.type == pygame.MOUSEBUTTONUP:
                 board_click = Board.click_on_cell(event.pos)
