@@ -3,6 +3,7 @@ from classes.EssenceStorageClass import EssenceStorage
 from fun.render_fun import *
 import asyncio
 from time import sleep
+from copy import copy
 
 FPS = 60
 pygame.init()
@@ -51,10 +52,10 @@ async def main():
                 essence_storage_click = EssenceStorage.click_on_cell(pos=event.pos)
                 if event.button == 1:
                     if essence_storage_click is not None:
-                        mouse_memory = EssenceStorage.collision_mup[essence_storage_click[0]][essence_storage_click[1]]
+                        mouse_memory = copy(EssenceStorage.collision_mup[essence_storage_click[0]][essence_storage_click[1]])
                 if event.button == 2:
                     if board_click is not None:
-                        mouse_memory = Board.essence_mup[board_click[0]][board_click[1]]
+                        mouse_memory = copy(Board.essence_mup[board_click[0]][board_click[1]])
 
             if event.type == pygame.MOUSEBUTTONUP:
                 board_click = Board.click_on_cell(event.pos)

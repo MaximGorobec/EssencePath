@@ -2,7 +2,7 @@ from classes.TileClass import TileClass
 import pygame
 from pprint import pprint
 from random import choice
-from fun.render_fun import get_EssanceList, get_info
+from fun.render_fun import get_EssanceList, get_info, white_black_convert
 from classes.EssenceClass import EssenceClass
 from fun.render_fun import is_connected_subgraph
 
@@ -10,8 +10,8 @@ from fun.render_fun import is_connected_subgraph
 class BoardClass:
     def __init__(self, screen, size, zoom):
         self.size = size
-        self.colision_mup = self.colision_mup = [[None] * self.size for _ in range(self.size)]
-        self.essence_mup = [[None] * self.size for _ in range(self.size)]
+        self.colision_mup = [[None for _ in range(self.size)] for _ in range(self.size)]
+        self.essence_mup = [[None for _ in range(self.size)] for _ in range(self.size)]
         self.screen = screen
         self.left = 450
         self.top = 100
@@ -37,6 +37,7 @@ class BoardClass:
                 Tile = TileClass()
                 Tile.render(screen=self.screen, left=left, top=top, zoom=self.zoom)
                 self.colision_mup[x][y] = Tile.rect
+
                 if self.essence_mup[x][y] is not None:
                     self.essence_mup[x][y].render(screen=self.screen, left=left, top=top, zoom=self.zoom)
                 self.check_connected(x, y)
@@ -64,6 +65,9 @@ class BoardClass:
                         self.graf[(x, y)].add((x + i[0], y + i[1]))
                         t = 1
         if t: return True
+        if self.essence_mup[x][y] is not None:
+            if (x, y) not in self.block_tiles:
+                self.essence_mup[x][y].img = white_black_convert(self.essence_mup[x][y].img)
         return False
 
     def remove_node(self, tile):

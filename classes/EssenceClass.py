@@ -3,9 +3,10 @@ from fun.render_fun import get_info
 from fun.render_fun import is_connected_subgraph
 
 class EssenceClass(pygame.sprite.Sprite):
-    def __init__(self, essence_type):
+    def __init__(self, essence_type, isicon=False):
         super().__init__()
         self.essence_type = essence_type
+        self.isicon = isicon
         try:
             self.img = pygame.image.load(f'data/images/essentials/{self.essence_type}.png')
         except Exception as e:
@@ -13,10 +14,11 @@ class EssenceClass(pygame.sprite.Sprite):
             print("нет спрайта", essence_type)
 
     def render(self, screen, left, top, zoom):
-        self.img = pygame.transform.scale(self.img, (zoom * 1.5, zoom * 1.5))
-        self.rect = self.img.get_rect(center=(left, top))
+        img = pygame.transform.scale(self.img, (zoom * 1.5, zoom * 1.5))
+        self.rect = img.get_rect(center=(left, top))
         if (self.rect.bottom <= screen.get_height()) and (self.rect.bottom > 0):
-            screen.blit(self.img, self.rect)
+            screen.blit(img, self.rect)
+
 
     def render_info(self, EssenceStorage, zoom):
         rect = self.rect.copy()

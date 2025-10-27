@@ -1,3 +1,5 @@
+from math import trunc
+
 from classes.EssenceClass import EssenceClass
 from fun.render_fun import get_EssanceList
 
@@ -9,7 +11,7 @@ class EssenceStorage:
         self.density = 1.5
 
         self.EssenceList = get_EssanceList()
-        self.collision_mup = [[EssenceClass(el) for el in row] for row in self.EssenceList]
+        self.collision_mup = [[EssenceClass(el, isicon=True) for el in row] for row in self.EssenceList]
 
     def render(self, zoom=50):
         for x in range(len(self.EssenceList)):
