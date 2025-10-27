@@ -6,15 +6,17 @@ from fun.render_fun import *
 import asyncio
 from time import sleep
 from copy import copy
+from fun.load_data import *
 
-FPS = 60
+
 pygame.init()
-pygame.display.set_caption('Essence Path')
 screen = pygame.display.set_mode((1000, 700))
+pygame.display.set_caption('Essence Path')
+
 clock = pygame.time.Clock()
 EssenceStorage = EssenceStorage(screen)
 
-turning_pages_sound = pygame.mixer.Sound('data/sounds/book-turning-pages.mp3')
+
 
 async def main():
     running = True
@@ -23,20 +25,23 @@ async def main():
     mouse_collide = None
     t = 0
     zoom = 50
+    FPS = 60
     Board = BoardClass(screen, randint(4, 6), zoom)
-    background_image = pygame.image.load('data/images/old_paper_fon.jpg')
 
     while running:
-        screen.blit(pygame.transform.scale(background_image, screen.get_size()), (0, 0))
+        screen.fill((255, 255, 255))
+        screen.blit(pygame.transform.scale(background_image.convert_alpha(), screen.get_size()), (0, 0))
         Board.render()
         EssenceStorage.render()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
+
             if event.type == pygame.MOUSEMOTION:
                 mouse_pos = event.pos
                 for i in range(len(EssenceStorage.collision_mup)):
@@ -66,31 +71,38 @@ async def main():
                         if board_click is not None:
                             if mouse_memory is not None:
                                 Board.essence_mup[board_click[0]][board_click[1]] = mouse_memory
-                                pygame.mixer.Sound('data/sounds/pencil-write-on-cardboard.mp3').play().set_volume(0.1)
+                                pencil_write_on_cardboard.play().set_volume(0.1)
                                 mouse_memory = None
+
                     if event.button == 3:
                         Board.essence_mup[board_click[0]][board_click[1]] = None
                         Board.remove_node(board_click)
-                        pygame.mixer.Sound('data/sounds/pencil-write-on-paper.mp3').play(1, 400).set_volume(0.5)
+                        pencil_write_on_paper.play(1, 400).set_volume(0.5)
 
             if event.type == pygame.MOUSEWHEEL:
                 EssenceStorage.top += event.y * 20
 
         if mouse_memory is not None:
-            screen.blit(pygame.transform.scale(pygame.image.load('data/images/spark.png'), (50, 50)), (mouse_pos[0] - 25, mouse_pos[1] - 25))
+            screen.blit(pygame.transform.scale(spark_img.convert_alpha(), (50, 50)), (mouse_pos[0] - 25, mouse_pos[1] - 25))
 
         if mouse_collide is not None:
             EssenceStorage.collision_mup[mouse_collide[0]][mouse_collide[1]].render_info(EssenceStorage, zoom)
 
-        pygame.display.update()
-        clock.tick(FPS)
         if is_connected_subgraph(Board.graf, Board.block_tiles):
             sleep(0.5)
             turning_pages_sound.play(1, 760)
             break
-        pygame.display.flip()
-        screen.fill((0, 0, 0))
-while True:
-    asyncio.run(main())
 
-#детектинг пути
+
+        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+
+asyncio.run(main())
+
+
+
+
+# уменьшить скачивание во время рендеринга в целом оптимизация    и попытаться закинуть на веб

@@ -20,9 +20,11 @@ def draw_ngon(screen, radius, position):
 
 def get_EssanceList():
     EL =[]
-    for entry in os.scandir("data/images/essentials"):
-        if entry.is_file():
-            EL.append(entry.name[:-4])
+    # for entry in os.scandir("data/images/essentials"):
+    #     if entry.is_file():
+    #         EL.append(entry.name[:-4])
+    EL = ['aer', 'alienis', 'aqua', 'arbor', 'auram', 'bestia', 'cognitio', 'corpus', 'exanimis', 'fabrico', 'fames', 'gelum', 'herba', 'humanus', 'ignis', 'instrumentum', 'iter', 'limus', 'lucrum', 'lux', 'machina', 'messis', 'metallum', 'meto', 'mortuus', 'motus', 'ordo', 'pannus', 'perditio', 'perfodio', 'permutatio', 'potentia', 'precantatio', 'sano', 'sensus', 'spiritus', 'telum', 'tempestas', 'tenebre', 'terra', 'tutamen', 'vacous', 'venenum', 'victus', 'vinculum', 'vitium', 'vitreus', 'volatus']
+
     n = 4
     return [EL[row:row + 4] for row in range(0, len(EL), n)]
 

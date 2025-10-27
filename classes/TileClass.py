@@ -3,7 +3,7 @@ import pygame
 class TileClass(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.img = pygame.image.load('data/images/tile.png')
+        self.img = pygame.image.load('data/images/tile.png').convert_alpha()
 
     def render(self, screen, left, top, zoom):
         self.img = pygame.transform.scale(self.img, (zoom * 1.5, zoom * 1.5))

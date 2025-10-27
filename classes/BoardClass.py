@@ -2,7 +2,7 @@ from classes.TileClass import TileClass
 import pygame
 from pprint import pprint
 from random import choice
-from fun.render_fun import get_EssanceList, get_info, white_black_convert
+from fun.render_fun import get_EssanceList, get_info, white_black_convert, draw_ngon
 from classes.EssenceClass import EssenceClass
 from fun.render_fun import is_connected_subgraph
 
@@ -42,6 +42,9 @@ class BoardClass:
                     self.essence_mup[x][y].render(screen=self.screen, left=left, top=top, zoom=self.zoom)
                 self.check_connected(x, y)
 
+
+                # draw_ngon(self.screen, self.zoom,(left, top))
+
     def click_on_cell(self, pos):
         for x in range(self.size):
             for y in range(self.size):
@@ -72,10 +75,9 @@ class BoardClass:
                 for i in self.block_tiles:
                     if is_connected_subgraph(self.graf, [i] + [(x, y)]):
                         t_colored = 1
-                if not t_colored:
-                    self.essence_mup[x][y].img = white_black_convert(self.essence_mup[x][y].img)
-                else:
-                    self.essence_mup[x][y].img = pygame.image.load(f'data/images/essentials/{self.essence_mup[x][y].essence_type}.png')
+
+                self.essence_mup[x][y].gray = not t_colored
+
 
 
         if t: return True
