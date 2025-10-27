@@ -70,11 +70,14 @@ class BoardClass:
             if (x, y) not in self.block_tiles:
                 t_colored = 0
                 for i in self.block_tiles:
-                    print(list(i) + [(x, y)])
                     if is_connected_subgraph(self.graf, [i] + [(x, y)]):
                         t_colored = 1
                 if not t_colored:
                     self.essence_mup[x][y].img = white_black_convert(self.essence_mup[x][y].img)
+                else:
+                    self.essence_mup[x][y].img = pygame.image.load(f'data/images/essentials/{self.essence_mup[x][y].essence_type}.png')
+
+
         if t: return True
 
         return False
